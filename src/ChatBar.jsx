@@ -20,7 +20,7 @@ class ChatBar extends Component {
     return (
       <div>
         <footer className="chatbar">
-          <input className="chatbar-username" placeholder={currentUser} value={currentUser} onChange = {this._usernameChange}/>
+          <input className="chatbar-username" placeholder={currentUser} onChange = {this._usernameChange}/>
           <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange = {this._contentChange} onKeyPress={this._onEnter}/>
         </footer>
 
@@ -40,7 +40,8 @@ class ChatBar extends Component {
   _onEnter = (e) => {
      if (e.key === 'Enter') {
        console.log("Entered was pressed.")
-       this.props.enterMessage(this.state);
+       this.props.enterMessage(this.state)
+       this.setState(defaultState);
      }
   }
 
