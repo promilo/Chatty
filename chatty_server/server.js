@@ -30,7 +30,7 @@ wss.on('connection', (ws) => {
 
   const broadcast = (message) => {
     wss.clients.forEach((c) => {
-      if(c != ws) {
+      if(c !  = ws) {
         c.send(JSON.stringify(message));
       }
     });
