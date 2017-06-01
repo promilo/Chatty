@@ -44,6 +44,14 @@ wss.on('connection', (ws) => {
     });
   }
 
+  const incomingBroadcast = (income) => {
+    wss.clients.forEach((c) => {
+      if (c != ws) {
+        c.send(JSON.stringify(income));
+      }
+    });
+  }
+
 
   ws.on('message', function incoming(message) {
     console.log("input is", message);
@@ -54,12 +62,14 @@ wss.on('connection', (ws) => {
       console.log(theMessage);
       const userChanged = {type: "incomingNotification", content: theMessage.content}
       console.log("userChanged: ", userChanged)
-      userChangeBroadcast(userChanged);
+      // userChangeBroadcast(userChanged);
+    default:
+      theMessage.key = uuidV4();
+      console.log(theMessage);
+      broadcast(theMessage);
     }
 
-    theMessage.key = uuidV4();
-    console.log(theMessage);
-    broadcast(theMessage);
+
   });
 
 
