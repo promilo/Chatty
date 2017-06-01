@@ -39,7 +39,7 @@ wss.on('connection', (ws) => {
   const userChangeBroadcast = (user) => {
     wss.clients.forEach((c) => {
       if (c != ws) {
-        c.send(JSON.stringify(message));
+        c.send(JSON.stringify(user));
       }
     });
   }
@@ -49,11 +49,12 @@ wss.on('connection', (ws) => {
     console.log("input is", message);
     console.log('received: %s', JSON.parse(message));
     let theMessage = JSON.parse(message);
-    switch(message.type){
+    switch(theMessage.type){
       case "postNotification":
-      console.log(message);
-      const userChanged = {type: "incomingNotification", content: message.content}
-      userChangeBroadcast(userchanged);
+      console.log(theMessage);
+      const userChanged = {type: "incomingNotification", content: theMessage.content}
+      console.log("userChanged: ", userChanged)
+      userChangeBroadcast(userChanged);
     }
 
     theMessage.key = uuidV4();
