@@ -23,8 +23,32 @@ const wss = new SocketServer({ server });
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 //ws is the (client)
+let userCount = 0
 wss.on('connection', (ws) => {
+
+  
+  const broadcastUser = (message) => {
+    wss.clients.forEach((c) => {
+      c.send(JSON.stringify(message));
+    });
+  }
+
+
+
+
+
+
   console.log('Client connected');
+  userCount += 1
+  sendCount = {type: "userCount", count: userCount}
+  console.log("sendCount", sendCount)
+  broadcastUser(sendCount);
+
+
+
+
+
+
 
 
 
@@ -57,16 +81,21 @@ wss.on('connection', (ws) => {
     console.log("input is", message);
     console.log('received: %s', JSON.parse(message));
     let theMessage = JSON.parse(message);
+
     switch(theMessage.type){
       case "postNotification":
       console.log(theMessage);
       const userChanged = {type: "incomingNotification", content: theMessage.content}
       console.log("userChanged: ", userChanged)
       // userChangeBroadcast(userChanged);
+
     default:
       theMessage.key = uuidV4();
       console.log(theMessage);
       broadcast(theMessage);
+
+
+
     }
 
 
@@ -76,5 +105,10 @@ wss.on('connection', (ws) => {
 
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected');
+    userCount -= 1
+    const lostUser = {type: "userCount", count: userCount}
+    broadcastUser(lostUser);
+  });
 });
