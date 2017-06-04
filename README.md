@@ -1,7 +1,7 @@
 Chatty App
 =====================
 
-A minimal and light dev environment for ReactJS.
+A minimal Chatty App..
 
 ### Usage
 
@@ -20,22 +20,41 @@ And also you could send a message if you go to the right form and then hitting e
 ### Dependencies
 
   "babel-core": "6.23.1",
+
   "babel-loader": "6.3.1",
+
   "babel-preset-es2015": "6.22.0",
+
   "babel-preset-react": "6.23.0",
+
   "babel-preset-stage-0": "6.22.0",
+
   "css-loader": "0.26.1",
+
   "eslint": "3.15.0",
+
   "eslint-plugin-react": "6.9.0",
+
   "node-sass": "4.5.0",
+
   "sass-loader": "6.0.0",
+  
   "sockjs-client": "^1.1.2",
+
   "style-loader": "0.13.1",
+
   "webpack": "2.2.1",
-"dependencies": {
-  "express": "4.15.3",
+
+  "express": "4.15.3
+
   "node-uuid": "1.4.8",
+
   "react": "15.4.2",
+
+
   "react-dom": "15.4.2",
-  "ws": "3.0.0" [babel-loader](https://github.com/babel/babel-loader)
+
+  "ws": "3.0.0"
+
+   [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
