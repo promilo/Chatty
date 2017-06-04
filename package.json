@@ -1,5 +1,5 @@
 {
-  "name": "react-simple-boilerplate",
+  "name": "chatty",
   "version": "1.0.0",
   "description": "Simple and lightweight Boilerplate for ReactJS projects",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/promilo/reactpractice"
+    "url": "git+https://github.com/promilo/reactpractice.git"
   },
   "keywords": [
     "react",
@@ -45,7 +45,11 @@
     "webpack-dev-server": "2.3.0"
   },
   "dependencies": {
+    "express": "4.15.3",
+    "node-uuid": "1.4.8",
     "react": "15.4.2",
-    "react-dom": "15.4.2"
-  }
+    "react-dom": "15.4.2",
+    "ws": "3.0.0"
+  },
+  "main": "server.js"
 }

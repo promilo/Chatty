@@ -1,27 +1,28 @@
 import React, {Component} from 'react';
 
 
-const defaultState = {
-  username: '',
-  content: ''
-}
+// const defaultState = {
+//   username: ,
+//   content: ''
+// }
 
 
 class ChatBar extends Component {
   constructor(props){
     super(props);
-    this.state = {username: "", content: ""};
+    console.log(this.props)
+    this.state = {username: this.props.user, content: ""};
   }
 
 
   render() {
     console.log("Rendering ChatBar");
-    let currentUser = this.props.user // Getting the username from the currentUser from app.jsx
+     // Getting the username from the currentUser from app.jsx
     return (
       <div>
         <footer className="chatbar">
-          <input className="chatbar-username" placeholder={currentUser} onChange = {this._usernameChange}/>
-          <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange = {this._contentChange} onKeyPress={this._onEnter}/>
+          <input className="chatbar-username" placeholder={this.props.user} onChange = {this._usernameChange} onKeyPress = {this._onUserEnter}/>
+          <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange = {this._contentChange} onKeyPress={this._onContentEnter}/>
         </footer>
 
       </div>
@@ -33,15 +34,22 @@ class ChatBar extends Component {
   }
 
   _contentChange = (e) => {
-    console.log("usernamefunction is called")
+    console.log("contentchange is called")
     this.setState({content: e.target.value})
   }
 
-  _onEnter = (e) => {
+  _onUserEnter = (e) => {
+    if (e.key === 'Enter') {
+      console.log("on User Enter is pressed");
+      this.props.enterUser(this.props.user, this.state.username)
+    }
+  }
+
+  _onContentEnter = (e) => {
      if (e.key === 'Enter') {
        console.log("Entered was pressed.")
        this.props.enterMessage(this.state)
-       this.setState(defaultState);
+       this.setState({content: ""});
      }
   }
 

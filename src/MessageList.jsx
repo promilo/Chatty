@@ -13,10 +13,15 @@ class MessageList extends Component {
           {this.props.msgs.map(this._printMsg)}
 
         </div>
+
+        // <div>
+        //
+        // Incoming messageS
+        // </div>
     );
   }
   _printMsg = (msg) => {
-    return <Message username = {msg.username} content = {msg.content} key={msg.key}/>
+    return <Message username = {msg.username} content = {msg.content} key={msg.key} type={msg.type}/>
   }
 
 }
