@@ -57,8 +57,6 @@ class App extends Component {
 
       this.socket = new WebSocket("ws://localhost:3001")
 
-
-
       this.socket.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
         console.log("this.socket.onmessage", newMessage);
@@ -81,8 +79,6 @@ class App extends Component {
           console.log("incomingNotification", displayUserChanged);
           this.state.messages.push(displayUserChanged)
           // this.setState({messages: newTotal})
-
-
 
           break;
           case "userCount":

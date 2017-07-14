@@ -14,7 +14,7 @@ const server = express()
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
 
-// Create the WebSockets server
+  // Create the WebSockets server
 const wss = new SocketServer({ server });
 
 
@@ -26,32 +26,16 @@ const wss = new SocketServer({ server });
 let userCount = 0
 wss.on('connection', (ws) => {
 
-  
   const broadcastUser = (message) => {
-    wss.clients.forEach((c) => {
+    wss.clients.forEach(function (c) {
       c.send(JSON.stringify(message));
     });
   }
-
-
-
-
-
-
   console.log('Client connected');
   userCount += 1
   sendCount = {type: "userCount", count: userCount}
   console.log("sendCount", sendCount)
-  broadcastUser(sendCount);
-
-
-
-
-
-
-
-
-
+  broadcastUser(sendCount)
   const broadcast = (message) => {
     wss.clients.forEach((c) => {
       if(c != ws) {
@@ -59,23 +43,6 @@ wss.on('connection', (ws) => {
       }
     });
   }
-
-  const userChangeBroadcast = (user) => {
-    wss.clients.forEach((c) => {
-      if (c != ws) {
-        c.send(JSON.stringify(user));
-      }
-    });
-  }
-
-  const incomingBroadcast = (income) => {
-    wss.clients.forEach((c) => {
-      if (c != ws) {
-        c.send(JSON.stringify(income));
-      }
-    });
-  }
-
 
   ws.on('message', function incoming(message) {
     console.log("input is", message);
@@ -88,23 +55,13 @@ wss.on('connection', (ws) => {
       const userChanged = {type: "incomingNotification", content: theMessage.content}
       console.log("userChanged: ", userChanged)
       // userChangeBroadcast(userChanged);
-
     default:
       theMessage.key = uuidV4();
       console.log(theMessage);
-      broadcast(theMessage);
-
-
-
+      broadcast(theMessage)
     }
-
-
   });
-
-
-
-
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
+  // Set up a callback forf when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     console.log('Client disconnected');
     userCount -= 1
