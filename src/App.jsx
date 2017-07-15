@@ -34,21 +34,25 @@ class App extends Component {
     console.log("Uername", this.state.currentUser.name)
     console.log("New Message", message)
     this.state.currentUser.name = message.username
-    const newMessage = {username: message.username, content: message.content};
+    const newMessage = {
+      type: "newMessage",
+      username: message.username,
+      content: message.content,
+      color: "black"};
     this.socket.send(JSON.stringify(newMessage))
-    const messages = this.state.messages.concat(newMessage)
-    this.setState({messages: messages})
+    // const messages = this.state.messages.concat(newMessage)
+    // this.setState({messages: messages})
     }
 
 
   _enterUser = (userA, userB) => {
     console.log("userA", userA);
     console.log("userB", userB);
-    const userChanged = {type: "postNotification", content: `${userA} has changed their name to ${userB}`}
+    const userChanged = {type: "postNotification", content: `${userA} has changed their name to ${userB}`, user: userB}
     this.socket.send(JSON.stringify(userChanged))
     const userShow = {content: userChanged.content}
-    const total = this.state.messages.concat(userShow);
-    this.setState({ currentUser: {name : userB}, messages: total})
+    // const total = this.state.messages.concat(userShow);
+    // this.setState({ currentUser: {name : userB}, messages: total})
   }
 
 

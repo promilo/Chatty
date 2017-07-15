@@ -18,6 +18,9 @@ const server = express()
 const wss = new SocketServer({ server });
 
 
+// store users color
+const users = {}
+
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
@@ -36,6 +39,7 @@ wss.on('connection', (ws) => {
   sendCount = {type: "userCount", count: userCount}
   console.log("sendCount", sendCount)
   broadcastUser(sendCount)
+
   const broadcast = (message) => {
     wss.clients.forEach((c) => {
       if(c != ws) {
@@ -44,21 +48,48 @@ wss.on('connection', (ws) => {
     });
   }
 
+  const broadcastAll = (message) => {
+    wss.clients.forEach((c) => {
+      c.send(JSON.stringify(message));
+    });
+  }
+
+
+  function randomColor() {
+    const rand255 = () => {
+      return Math.floor(Math.random() * 255);
+    }
+    return "rgb(" + rand255() + "," + rand255() + "," + rand255() + ")";
+}
   ws.on('message', function incoming(message) {
     console.log("input is", message);
-    console.log('received: %s', JSON.parse(message));
     let theMessage = JSON.parse(message);
-
     switch(theMessage.type){
+      case "newMessage":
+      console.log("newMessage", theMessage)
+      if (!(users[theMessage.username])){
+        theMessage.color = "black"
+      } else {
+      theMessage.color = users[theMessage.username]
+      }
+
       case "postNotification":
+      // Username changed
       console.log(theMessage);
-      const userChanged = {type: "incomingNotification", content: theMessage.content}
-      console.log("userChanged: ", userChanged)
+      if (users[theMessage.user]){
+        const userChanged = {type: "incomingNotification", content: theMessage.content, color: users[theMessage.user]}
+      } else {
+        const userColor = randomColor()
+        users[theMessage.user] = userColor
+        const userChanged = {type: "incomingNotification", content: theMessage.content, color: users[theMessage.user]}
+      }
+
       // userChangeBroadcast(userChanged);
+
     default:
       theMessage.key = uuidV4();
       console.log(theMessage);
-      broadcast(theMessage)
+      broadcastAll(theMessage)
     }
   });
   // Set up a callback forf when a client closes the socket. This usually means they closed their browser.

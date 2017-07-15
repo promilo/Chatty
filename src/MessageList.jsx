@@ -14,7 +14,7 @@ class MessageList extends Component {
     );
   }
   _printMsg = (msg) => {
-    return <Message username={msg.username} content={msg.content} key={msg.key} type={msg.type}/>
+    return <Message username={msg.username} content={msg.content} key={msg.key} type={msg.type} color={msg.color}/>
   }
 
 }
