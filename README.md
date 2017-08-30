@@ -4,10 +4,9 @@ Chatty App
 A minimal Chatty App..
 
 ### Usage
-
-Open 2 terminals.
-in one of the terminals run npm start
-the other terminal please go to the chatty_server folder and then run node server.js.
+Open up a terminal 
+run npm start
+then please open up another terminal and "cd chatty_server" and then run "node server.js".
 
 and then open 0.0.0.0:3000 to open up the chat server.
 
